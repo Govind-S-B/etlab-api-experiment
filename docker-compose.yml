@@ -2,5 +2,10 @@ version: "3.8"
 services:
   rit-etlab-api:
     build: .
+    volumes:
+      - ${HOME}/certify/server_logs:${HOME}/certify/logs
+      - ${HOME}/certify/ssl:/app/ssl
+    environment:
+      GUNICORN_CMD_ARGS: "--access-logfile ${HOME}/certify/logs/gunicorn_access.log --error-logfile ${HOME}/certify/logs/gunicorn_error.log --certfile /app/ssl/cert.pem --keyfile /app/ssl/key.pem"
     ports:
       - "8000:8000"
